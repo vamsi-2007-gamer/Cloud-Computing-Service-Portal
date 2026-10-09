@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — CloudSphere{% endblock %}
+{% block content %}
+<main class="dashboard">
+  <div class="dashboard-head">
+    <div>
+      <div class="eyebrow">CLOUD WORKSPACE</div>
+      <h1>Good to see you, {{ user["name"].split()[0] }}.</h1>
+      <p class="muted">Manage your files and keep your digital workspace organized.</p>
+    </div>
+    <form class="upload-form" method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+      <input id="fileInput" type="file" name="file" hidden>
+      <label for="fileInput" class="btn">＋ Upload File</label>
+      <button id="uploadBtn" type="submit" class="btn btn-dark" disabled>Upload</button>
+    </form>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-symbol purple">◫</div><div><span>Total Files</span><strong>{{ files|length }}</strong></div></div>
+    <div class="stat-card"><div class="stat-symbol blue">☁</div><div><span>Storage Used</span><strong>{{ format_size(total_size) }}</strong></div></div>
+    <div class="stat-card"><div class="stat-symbol green">✓</div><div><span>Cloud Status</span><strong>Active</strong></div></div>
+  </div>
+
+  <div class="workspace">
+    <div class="files-panel">
+      <div class="panel-head"><div><h2>My Files</h2><span class="muted">Your uploaded documents</span></div><span class="count-pill">{{ files|length }} files</span></div>
+      {% if files %}
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>FILE</th><th>SIZE</th><th>UPLOADED</th><th>ACTION</th></tr></thead>
+          <tbody>
+          {% for file in files %}
+            <tr>
+              <td><div class="file-name"><span class="file-icon {{ 'purple' if file['original_name'].lower().endswith('pdf') else 'blue' }}">▤</span><strong>{{ file["original_name"] }}</strong></div></td>
+              <td>{{ format_size(file["size"]) }}</td>
+              <td>{{ file["uploaded_at"] }}</td>
+              <td class="actions">
+                <a class="icon-btn" title="Download" href="{{ url_for('download', file_id=file['id']) }}">↓</a>
+                <form method="POST" action="{{ url_for('delete', file_id=file['id']) }}" onsubmit="return confirm('Delete this file?');"><button class="icon-btn danger" title="Delete">×</button></form>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty">
+        <div class="empty-icon">☁</div>
+        <h3>Your cloud is empty</h3>
+        <p>Upload your first file to start using your cloud storage.</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <aside class="storage-panel">
+      <div class="panel-head"><div><h2>Storage</h2><span class="muted">Personal cloud</span></div></div>
+      <div class="storage-circle"><div><strong>{{ format_size(total_size) }}</strong><span>used</span></div></div>
+      <div class="storage-text"><strong>{{ format_size(total_size) }}</strong> used of <strong>1 GB</strong></div>
+      <div class="progress"><div style="width: {{ [total_size / (1024*1024*1024) * 100, 100]|min }}%"></div></div>
+      <p class="muted small">Maximum file size: 50 MB</p>
+      <div class="tip"><span>💡</span><div><b>Cloud tip</b><br><small>Keep your important project files organized in one place.</small></div></div>
+    </aside>
+  </div>
+</main>
+{% endblock %}

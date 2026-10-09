@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}CloudSphere — Cloud Computing Service Portal{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">☁ DIGITAL CLOUD PLATFORM</div>
+    <h1>Your files.<br><span>Everywhere.</span></h1>
+    <p>CloudSphere is a modern cloud computing service portal for securely storing, organizing and managing your digital files from one simple dashboard.</p>
+    <div class="hero-buttons">
+      <a class="btn" href="{{ url_for('register') }}">Create Free Account →</a>
+      <a class="btn btn-ghost" href="{{ url_for('login') }}">Sign In</a>
+    </div>
+    <div class="trust-row">
+      <span>✓ Secure login</span><span>✓ Easy file management</span><span>✓ Responsive design</span>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="mini-top"><span>Cloud Storage</span><span class="online">● Online</span></div>
+    <div class="cloud-orb">☁</div>
+    <div class="storage-label"><strong>7.2 GB</strong><span>of 10 GB used</span></div>
+    <div class="progress"><div style="width:72%"></div></div>
+    <div class="mini-files">
+      <div><span class="file-icon purple">PDF</span><b>Project Report.pdf</b><small>2.4 MB</small></div>
+      <div><span class="file-icon blue">DOC</span><b>Presentation.docx</b><small>1.1 MB</small></div>
+      <div><span class="file-icon green">IMG</span><b>Campus Photo.png</b><small>850 KB</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-heading"><div class="eyebrow">WHAT YOU GET</div><h2>Everything you need in one cloud portal.</h2></div>
+  <div class="feature-grid">
+    <div class="feature"><div class="feature-icon">↑</div><h3>Upload & Store</h3><p>Upload your documents and media files directly to your personal cloud space.</p></div>
+    <div class="feature"><div class="feature-icon">⌕</div><h3>Manage Files</h3><p>View, download and delete files from a clean, organized dashboard.</p></div>
+    <div class="feature"><div class="feature-icon">◉</div><h3>Storage Insights</h3><p>See your file count and storage usage at a glance.</p></div>
+  </div>
+</section>
+{% endblock %}
